@@ -5,8 +5,55 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
+
+    @Test
+    public void switchingToThe8thRadioStation() {
+        Radio rad = new Radio();
+
+        rad.setCurrentRadioStation(8);
+
+        assertEquals(8, rad.getCurrentRadioStation());
+    }
+
+    @Test
+    public void switchingToThe9thRadioStation() {
+        Radio rad = new Radio();
+
+        rad.setCurrentRadioStation(9);
+
+        assertEquals(rad.getLastRadioStation(), rad.getCurrentRadioStation());
+    }
+
+    @Test
+    public void switchingToThe10thRadioStation() {
+        Radio rad = new Radio();
+
+        rad.setCurrentRadioStation(10);
+
+        assertEquals(5, rad.getCurrentRadioStation());
+    }
+
+    @Test
+    public void switchingToTheMinus1thRadioStation() {
+        Radio rad = new Radio();
+
+        rad.setCurrentRadioStation(-1);
+
+        assertEquals(5, rad.getCurrentRadioStation());
+    }
+
     @Test
     public void switchingToNextRadioStation() {
+        Radio rad = new Radio();
+        rad.setCurrentRadioStation(8);
+
+        rad.nextRadioStation();
+
+        assertEquals(rad.getLastRadioStation(), rad.getCurrentRadioStation());
+    }
+
+    @Test
+    public void switchingFromTheLastToTheFirstRadioStation() {
         Radio rad = new Radio();
         rad.setCurrentRadioStation(9);
 
@@ -16,19 +63,19 @@ class RadioTest {
     }
 
     @Test
-    public void switchingToNextRadioStationOn50() {
+    public void switchingToPrevRadioStation() {
         Radio rad = new Radio();
-        rad.setCurrentRadioStation(50);
+        rad.setCurrentRadioStation(1);
 
-        rad.nextRadioStation();
+        rad.prevRadioStation();
 
-        assertEquals(1, rad.getCurrentRadioStation());
+        assertEquals(rad.getFirstRadioStation(), rad.getCurrentRadioStation());
     }
 
     @Test
-    public void switchingToPrevRadioStationOn55() {
+    public void switchingFromTheFirstToTheLastRadioStation() {
         Radio rad = new Radio();
-        rad.setCurrentRadioStation(55);
+        rad.setCurrentRadioStation(0);
 
         rad.prevRadioStation();
 
@@ -36,49 +83,43 @@ class RadioTest {
     }
 
     @Test
-    public void switchingToPrevRadioStation() {
+    public void changingTheVolumeTo9() {
         Radio rad = new Radio();
-        rad.setCurrentRadioStation(5);
 
-        rad.prevRadioStation();
+        rad.setCurrentVolume(9);
 
-        assertEquals(4, rad.getCurrentRadioStation());
+        assertEquals(9, rad.getCurrentVolume());
     }
 
     @Test
-    public void switchingRadioStations() {
+    public void maximumVolume() {
         Radio rad = new Radio();
-        rad.setCurrentRadioStation(8);
 
-        assertEquals(8, rad.getCurrentRadioStation());
+        rad.setCurrentVolume(10);
+
+        assertEquals(rad.getMaxVolume(), rad.getCurrentVolume());
     }
 
     @Test
-    public void switchingRadioStationOnMinus50() {
+    public void changingTheVolumeTo11() {
         Radio rad = new Radio();
-        rad.setCurrentRadioStation(-50);
 
-        assertEquals(0, rad.getCurrentRadioStation());
-    }
-
-    @Test
-    public void changingVolume() {
-        Radio rad = new Radio();
-        rad.setCurrentVolume(5);
+        rad.setCurrentVolume(11);
 
         assertEquals(5, rad.getCurrentVolume());
     }
 
     @Test
-    public void changingVolumeOn15() {
+    public void changingTheVolumeToMinus1() {
         Radio rad = new Radio();
-        rad.setCurrentVolume(15);
 
-        assertEquals(0, rad.getCurrentVolume());
+        rad.setCurrentVolume(-1);
+
+        assertEquals(5, rad.getCurrentVolume());
     }
 
     @Test
-    public void turnUpVolume() {
+    public void increaseTheSoundVolumeBy1() {
         Radio rad = new Radio();
         rad.setCurrentVolume(9);
 
@@ -88,7 +129,7 @@ class RadioTest {
     }
 
     @Test
-    public void turnUpVolumeOn10() {
+    public void increaseTheVolumeBy1AtMaxVolume() {
         Radio rad = new Radio();
         rad.setCurrentVolume(10);
 
@@ -98,39 +139,19 @@ class RadioTest {
     }
 
     @Test
-    public void turnUpVolumeOn50() {
+    public void turnDownTheSoundVolumeBy1() {
         Radio rad = new Radio();
-        rad.setCurrentVolume(50);
-
-        rad.increaseVolume();
-
-        assertEquals(1, rad.getCurrentVolume());
-    }
-
-    @Test
-    public void turnUpVolumeOnMinus50() {
-        Radio rad = new Radio();
-        rad.setCurrentVolume(-50);
-
-        rad.increaseVolume();
-
-        assertEquals(1, rad.getCurrentVolume());
-    }
-
-    @Test
-    public void turnDownVolume() {
-        Radio rad = new Radio();
-        rad.setCurrentVolume(5);
+        rad.setCurrentVolume(1);
 
         rad.turnDownVolume();
 
-        assertEquals(4, rad.getCurrentVolume());
+        assertEquals(rad.getMinVolume(), rad.getCurrentVolume());
     }
 
     @Test
-    public void turnDownVolumeOn50() {
+    public void turnDownTheVolumeBy1AtMinVolume() {
         Radio rad = new Radio();
-        rad.setCurrentVolume(50);
+        rad.setCurrentVolume(0);
 
         rad.turnDownVolume();
 
